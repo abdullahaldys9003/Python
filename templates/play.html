@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تشغيل التسجيلات</title>
+</head>
+<body>
+    <h1>تشغيل التسجيلات الصوتية</h1>
+    <div id="recordingsList"></div>
+
+    <script>
+        // جلب قائمة الملفات الصوتية
+        const fetchRecordings = async () => {
+            const response = await fetch('/recordings');
+            const recordings = await response.json();
+
+            const recordingsList = document.getElementById('recordingsList');
+            recordingsList.innerHTML = '';
+
+            recordings.forEach(recording => {
+                const audioElement = document.createElement('audio');
+                audioElement.controls = true;
+                audioElement.src = `/uploads/${recording}`;
+
+                const listItem = document.createElement('div');
+                listItem.appendChild(audioElement);
+
+                recordingsList.appendChild(listItem);
+            });
+        };
+
+        // عند تحميل الصفحة يتم عرض التسجيلات
+        window.onload = () => {
+            fetchRecordings();
+        };
+    </script>
+</body>
+</html>

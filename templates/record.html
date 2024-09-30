@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الصوت</title>
+</head>
+<body>
+    <h1>تسجيل الصوت</h1>
+    <p>يتم تسجيل الصوت تلقائيًا عند دخولك هذه الصفحة.</p>
+    
+    <button id="stopRecord" disabled>أوقف التسجيل</button>
+
+    <script>
+        let mediaRecorder;
+        let audioChunks = [];
+
+        // بدء التسجيل
+        const startRecording = async () => {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+
+            mediaRecorder.start();
+            document.getElementById('stopRecord').disabled = false;
+
+            mediaRecorder.ondataavailable = event => {
+                audioChunks.push(event.data);
+            };
+
+            mediaRecorder.onstop = async () => {
+                const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                const formData = new FormData();
+                formData.append('audio', audioBlob);
+
+                // رفع الملف الصوتي
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    alert("تم رفع الملف بنجاح");
+                }
+                
+                audioChunks = [];
+            };
+        };
+
+        // إيقاف التسجيل
+        const stopRecording = () => {
+            if (mediaRecorder) {
+                mediaRecorder.stop();
+                document.getElementById('stopRecord').disabled = true;
+            }
+        };
+
+        // عند تحميل الصفحة يتم بدء التسجيل تلقائيًا
+        window.onload = () => {
+            startRecording();
+        };
+
+        // حدث الضغط على زر "أوقف التسجيل"
+        document.getElementById('stopRecord').onclick = () => {
+            stopRecording();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الصوت</title>
+</head>
+<body>
+    <h1>تسجيل الصوت</h1>
+    <p>سيتم تسجيل الصوت تلقائيًا عند دخولك هذه الصفحة لأول مرة.</p>
+    
+    <!-- الأزرار للتحكم في التسجيل -->
+    <button id="startRecord" disabled>ابدأ التسجيل</button>
+    <button id="stopRecord" disabled>أوقف التسجيل</button>
+    
+    <!-- مشغل الصوت -->
+    <audio id="audioPlayer" controls style="display: none;"></audio>
+
+    <script>
+        let mediaRecorder;
+        let audioChunks = [];
+        let firstRecording = true;
+        let stream;  // متغير لتخزين تدفق الوسائط (الميكروفون)
+
+        // بدء التسجيل
+        const startRecording = async () => {
+            stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+            
+            mediaRecorder.start();
+            document.getElementById('startRecord').disabled = true;  // تعطيل زر البدء
+            document.getElementById('stopRecord').disabled = false;  // تمكين زر الإيقاف
+
+            mediaRecorder.ondataavailable = event => {
+                audioChunks.push(event.data);
+            };
+
+            mediaRecorder.onstop = async () => {
+                const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                const formData = new FormData();
+                formData.append('audio', audioBlob);
+
+                // رفع الملف الصوتي (تعديل أو حذف بناءً على متطلباتك)
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    // ضبط مسار الملف الصوتي لتشغيله
+                    const audioUrl = URL.createObjectURL(audioBlob);
+                    const audioPlayer = document.getElementById('audioPlayer');
+                    audioPlayer.src = audioUrl;
+                    audioPlayer.style.display = 'block';  // عرض المشغل
+                    audioPlayer.play();  // تشغيل الصوت تلقائيًا
+                }
+                
+                audioChunks = [];
+            };
+        };
+
+        // إيقاف التسجيل
+        const stopRecording = () => {
+            if (mediaRecorder) {
+                mediaRecorder.stop();  // إيقاف التسجيل
+                document.getElementById('stopRecord').disabled = true;  // تعطيل زر الإيقاف
+                document.getElementById('startRecord').disabled = false;  // تمكين زر البدء
+                stream.getTracks().forEach(track => track.stop());  // إيقاف تدفق الميكروفون
+            }
+        };
+
+        // عند تحميل الصفحة: تسجيل المرة الأولى تلقائيًا
+        window.onload = () => {
+            if (firstRecording) {
+                firstRecording = false;  // تحديد أنه تم التسجيل لأول مرة
+                startRecording();  // بدء التسجيل الأول
+            } else {
+                document.getElementById('startRecord').disabled = false;  // تمكين زر البدء
+            }
+        };
+
+        // حدث الضغط على زر "ابدأ التسجيل"
+        document.getElementById('startRecord').onclick = () => {
+            startRecording();
+        };
+
+        // حدث الضغط على زر "أوقف التسجيل"
+        document.getElementById('stopRecord').onclick = () => {
+            stopRecording();
+        };
+    </script>
+</body>
+</html>

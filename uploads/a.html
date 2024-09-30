@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تشغيل صوت Blob</title>
+</head>
+<body>
+    <h1>تشغيل صوت Blob</h1>
+
+    <!-- مشغل الصوت -->
+    <audio id="audioPlayer" controls></audio>
+
+    <script>
+        // هنا تقوم بتحديد الـ Blob (يمكن أن يكون لديك Blob من مصدر آخر، مثل تحميله من الخادم)
+        const audioBlob = new Blob([/* بيانات الصوت هنا */], { type: 'audio/wav' });  // استبدل 'audio/wav' بنوع الملف الصحيح إذا لزم الأمر
+       
+        // إنشاء URL من Blob
+        const audioUrl = URL.createObjectURL(audioBlob);
+        
+        // تعيين مسار الـ URL لمشغل الصوت
+        const audioPlayer = document.getElementById('audioPlayer');
+        audioPlayer.src = audioUrl;
+        
+        // تشغيل الصوت تلقائيًا عند تحميل الصفحة
+        audioPlayer.play();
+    </script>
+</body>
+</html>
