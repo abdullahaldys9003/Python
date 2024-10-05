@@ -1,37 +1,20 @@
-from kivy.app import App
-from kivy.uix.button import Button
-from jnius import autoclass
-from android.permissions import request_permissions, Permission
+import pandas as pd
 
-# استخدام Pyjnius للوصول إلى Android API
-Environment = autoclass('android.os.Environment')
-File = autoclass('java.io.File')
+# مثال على بيانات جهات الاتصال
+data = {
+    'رقم الهاتف': ['1234567890', '0987654321', '1122334455', '770488364'],  # إضافة الرقم الخاص بك
+    'تطبيقات التواصل الاجتماعي': ['WhatsApp, Facebook', 'Instagram', 'Twitter, Facebook', 'WhatsApp, Snapchat']  # إضافة التطبيقات الخاصة بك
+}
 
-# طلب الأذونات للوصول إلى الملفات
-def request_android_permissions():
-    request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE])
+# إنشاء DataFrame
+df = pd.DataFrame(data)
 
-# دالة لعرض محتويات مجلد الصور
-def show_user_images():
-    # الحصول على مسار مجلد DCIM (الذي يحتوي على الصور في الغالب)
-    pictures_directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath()
-    
-    # قراءة الملفات الموجودة في المجلد
-    file = File(pictures_directory)
-    files_list = file.listFiles()
+# البحث عن تطبيقات التواصل الاجتماعي لرقم معين
+رقم_الهاتف_للبحث = '770488364'  # الرقم الخاص بك
+result = df[df['رقم الهاتف'] == رقم_الهاتف_للبحث]
 
-    if files_list:
-        for f in files_list:
-            print(f.getName())  # طباعة أسماء الملفات
-
-# تطبيق Kivy الأساسي
-class FileBrowserApp(App):
-    def build(self):
-        # زر يطلب الأذونات ويعرض الملفات عند الضغط
-        btn = Button(text="عرض ملفات الصور")
-        btn.bind(on_press=lambda x: (request_android_permissions(), show_user_images()))
-        return btn
-
-# تشغيل التطبيق
-if __name__ == "__main__":
-    FileBrowserApp().run()
+if not result.empty:
+    print(f"تطبيقات التواصل الاجتماعي لرقم {رقم_الهاتف_للبحث}: {result['تطبيقات التواصل الاجتماعي'].values[0]}")
+else:
+    print("رقم الهاتف غير موجود.") 
+  
