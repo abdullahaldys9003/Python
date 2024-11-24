@@ -1,0 +1,45 @@
+git remote -v
+git remote add origin https://github.com/username/repository.github
+git remote -v
+git pull origin main
+
+
+///////
+git add ReportHub
+    or
+git add .
+git commit -m "Added ReportHub folder"
+git push origin main
+///////
+
+
+
+flutter-master.zip
+//فك الضغط
+unzip flutter-master.zip 
+
+ن//قها الى مجلد 
+mv flutter-master ~/flutter
+
+//اضافة المسار
+nano ~/.bashrc
+export PATH="$PATH:$HOME/flutter/bin"
+ctrl +o+enter
+ctrl+x 
+
+//تحدبث الببئه
+
+source ~/.bashrc
+
+//التحقق من انها في المسار العالمي
+which flutter
+output:/data/data/com.termux/files/home/flutter/bin/flutter 
+
+//الاصدار
+
+flutter --version
+//حذف عند حصول خطاء
+rm -rf ~/flutter
+
+// اعادة تثبيت
+git clone https://github.com/flutter/flutter.git ~/flutter

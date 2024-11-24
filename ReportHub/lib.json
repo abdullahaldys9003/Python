@@ -1,0 +1,41 @@
+pandas
+import matplotlib.pyplot as plt
+
+from sklearn. tree import DecisionTreeClassifier
+from sklearn.metrics import confusion_matrix
+
+from sklearn.ensemble import Random ForestClassifier
+
+cmdtree
+import seaborn as sn
+
+
+from sklearn.neighbors import KNeighborsClassifier
+
+
+from sklearn.preprocessing import Label Encoder
+
+from sklearn.metrics import r2_score
+
+
+
+source myenv/bin/activate
+pip install scikit-learn
+pip show scikit-learn
+pip install pandas
+pip install scikit-learn --upgrade
+اضهار الاصدارات المتاحة
+pip install scikit-learn==
+pip install scikit-learn==1.2.2
+data = [
+    {"id": 1, "department_name": "سرقة", "reporter_name": "مراسل 1", "reported_person_name": "الشخص المبلغ عنه 1",
+     "report_number": "2801-2132", "report_type": "سرقة", "report_status": "مفتوح", 
+     "report_description": "هذا هو وصف البلاغ رقم 1، يشمل جميع التفاصيل المطلوبة.", 
+     "report_date": "2024-11-24", "report_time": "12:34:56", "location": "مدينة 1، اليمن", 
+     "reported_person_number": "+967-760640401", "report_category": "طارئ", 
+     "reporter_address": "العنوان 1، المدينة 1", "reporter_phone_number": "+967 789074101", 
+     "reporter_date": "1988-03-04"}
+]
+//البيانات على شكل جدول 
+import pandas as pd
+df = pd.DataFrame(data)
