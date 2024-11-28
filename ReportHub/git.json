@@ -1,6 +1,5 @@
 git remote -v
 git remote add origin https://github.com/username/repository.github
-git remote -v
 git pull origin main
 
 

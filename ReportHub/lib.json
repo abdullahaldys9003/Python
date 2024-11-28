@@ -1,25 +1,20 @@
-pandas
+"start"
+source myenv/bin/activate
+pip install notebook
+jupyter notebook
+"lib"
+import pandas as pd
 import matplotlib.pyplot as plt
-
-from sklearn. tree import DecisionTreeClassifier
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import confusion_matrix
-
 from sklearn.ensemble import Random ForestClassifier
-
 cmdtree
 import seaborn as sn
-
-
 from sklearn.neighbors import KNeighborsClassifier
-
-
 from sklearn.preprocessing import Label Encoder
-
 from sklearn.metrics import r2_score
 
-
-
-source myenv/bin/activate
+"pip"
 pip install scikit-learn
 pip show scikit-learn
 pip install pandas
@@ -27,15 +22,28 @@ pip install scikit-learn --upgrade
 اضهار الاصدارات المتاحة
 pip install scikit-learn==
 pip install scikit-learn==1.2.2
-data = [
-    {"id": 1, "department_name": "سرقة", "reporter_name": "مراسل 1", "reported_person_name": "الشخص المبلغ عنه 1",
-     "report_number": "2801-2132", "report_type": "سرقة", "report_status": "مفتوح", 
-     "report_description": "هذا هو وصف البلاغ رقم 1، يشمل جميع التفاصيل المطلوبة.", 
-     "report_date": "2024-11-24", "report_time": "12:34:56", "location": "مدينة 1، اليمن", 
-     "reported_person_number": "+967-760640401", "report_category": "طارئ", 
-     "reporter_address": "العنوان 1، المدينة 1", "reporter_phone_number": "+967 789074101", 
-     "reporter_date": "1988-03-04"}
-]
-//البيانات على شكل جدول 
-import pandas as pd
-df = pd.DataFrame(data)
+pip install jupyter
+pip list:all lib
+
+"build"
+pip install virtualenv
+virtualenv myenv
+source myenv/bin/activate
+pip install jupyter --index-url=https://pypi.org/simple
+
+pip install scikit-learn -i https://pypi.douban.com/simple
+""
+scikit-build
+scikit-learn
+""
+myenv/lib/pythonX.X/site-packages/
+cp -r /data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.11/site-packages/<library_name> /storage/emulated/0/<your_folder>/
+
+cp -r /data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.11/site-packages/scikit_learn-1.3.0.dist-info /storage/emulated/0/
+
+
+ls /data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.11/site-packages/
+
+
+"jupyter"
+%matplotlib inline
