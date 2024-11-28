@@ -6,6 +6,7 @@ git pull origin main
 ///////
 git add ReportHub
     or
+    git add index.html
 git add .
 git commit -m "Added ReportHub folder"
 git push origin main
